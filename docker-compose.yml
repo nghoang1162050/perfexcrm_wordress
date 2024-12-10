@@ -1,14 +1,14 @@
 services:
   perfex:
-    image: perfex
+    build: .
     depends_on:
       - mysql
     ports:
-      - "888:80"
+      - "8080:80"
     volumes:
       - perfex_data:/var/www/html/
   mysql:
-    image: mysql
+    image: mysql:8.0
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:

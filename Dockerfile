@@ -18,6 +18,13 @@ RUN docker-php-ext-install mysqli gd zip
 RUN a2enmod rewrite
 COPY . /var/www/html/
 
+# Add wait-for-it script
+COPY wait-for-it.sh /usr/local/bin/wait-for-it
+RUN chmod +x /usr/local/bin/wait-for-it
+
+# Modify CMD to wait for MySQL
+CMD ["wait-for-it", "mysql:3306", "--", "apache2-foreground"]
+
 # Configuring Ownerships and permissions
 RUN chown -R www-data:www-data /var/www/html/
 
